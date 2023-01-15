@@ -1,0 +1,28 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 70px;
+}
+
+.starter-template {
+    padding: 40px 15px;
+
+}
+
+table {
+    text-align: left;
+}
+
+div.thumbnail img {
+    max-height: 200px;
+
+}
+img{
+    margin-top: 20px;
+}
+.price{
+    font-size: 20px;
+    font-weight: bold;
+}
+.title{
+    margin-bottom: 30px;
+}

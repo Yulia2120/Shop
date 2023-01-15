@@ -1,0 +1,26 @@
+
+.form-control:active{
+    border-color: #146c43;
+    box-shadow: none;
+}
+.form-control:focus{
+    border-color: #146c43;
+    box-shadow: none;
+}
+.admin-container{
+    margin-top: 100px;
+}
+.wrap{
+    display: flex;
+
+}
+.wrap a{
+    margin-right: 10px;
+}
+.title-add{
+    font-weight: normal;
+    font-size: 20px;
+}
+.form-admin{
+    margin-bottom: 30px;
+}
