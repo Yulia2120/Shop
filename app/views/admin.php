@@ -13,7 +13,7 @@ $db = mysqli_connect('localhost', 'root', '', 'shop') or die ('Ошибка по
     <script src="https://kit.fontawesome.com/23cc510106.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar navbar-dark bg-dark navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand text-danger" href="../../index.php">STORE</a>
