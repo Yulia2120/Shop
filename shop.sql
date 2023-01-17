@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Янв 15 2023 г., 13:43
+-- Время создания: Янв 20 2023 г., 09:38
 -- Версия сервера: 10.4.27-MariaDB
 -- Версия PHP: 8.1.12
 
@@ -49,7 +49,48 @@ INSERT INTO `products` (`id`, `title`, `price`, `description`, `urlimg`) VALUES
 (7, 'Apple iPhone 12 128GB (Purple)', 28999, 'Экран 6.1 inches, 90.2 cm2 (1170 x 2532 pixels, 19.5:9 ratio), Super Retina XDR OLED ( Scratch-resistant ceramic glass) ', 'https://i.ibb.co/yqg8fvd/3.jpg'),
 (8, 'Apple iPhone 12 128GB (Purple)', 28999, 'Экран 6.1 inches, 90.2 cm2 (1170 x 2532 pixels, 19.5:9 ratio), Super Retina XDR OLED ( Scratch-resistant ceramic glass) ', 'https://i.ibb.co/dp3JfwJ/2.jpg'),
 (9, 'Apple iPhone 12 128GB (Purple)', 28999, 'Экран 6.1 inches, 90.2 cm2 (1170 x 2532 pixels, 19.5:9 ratio), Super Retina XDR OLED ( Scratch-resistant ceramic glass) ', 'https://i.ibb.co/HY6ZS91/1.jpg'),
-(11, 'Sumsung', 33999, 'Good', 'https://i.ibb.co/547nshY/9.jpg');
+(11, 'Sumsung', 33999, 'Good', 'https://i.ibb.co/547nshY/9.jpg'),
+(13, 'Sumsung', 16789, 'Экран 6.1 inches, 90.2 cm2 (1170 x 2532 pixels', 'https://i.ibb.co/yqg8fvd/3.jpg'),
+(14, 'Sumsung', 26723, 'Экран 6.1 inches, 90.2 cm2 (1170 x 2532 pixels', 'https://i.ibb.co/LS3c7Hh/7.jpg'),
+(15, 'Sumsung', 24723, 'Экран 6.1 inches, 90.2 cm2 (1170 x 2532 pixels', 'https://i.ibb.co/CzYqvb2/5.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `login` varchar(100) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `family` varchar(100) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `password` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `email`, `name`, `family`, `phone`, `address`, `password`) VALUES
+(1, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '123456'),
+(6, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '$2y$10$U.bmTFoALMQM9fHAv.JVm.My6Ir79GN6gOP1EHI9ONd5sCVqb3nN2'),
+(10, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '$2y$10$EmeIJ3H/EWEBenGWetgCiOlArCScTA9Up7Gpe2ZZWHpjpBHH7yRrW'),
+(11, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '$2y$10$K9TpZQ2o9eonKYgsMBqYe.gVfar.ljQwgVfABeIElInf2kNvR6Cte'),
+(12, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', 'qwerty'),
+(13, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', 'disco'),
+(14, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '987654'),
+(15, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '987654'),
+(16, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '67890'),
+(17, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '67890'),
+(18, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '789'),
+(19, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '56789'),
+(20, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', '56789'),
+(21, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', 'mers'),
+(22, 'Figaro ', 'figaro@gmail.com', 'Yuliya', 'Obushko', '098-77-77-777', 'Step', 'mers');
 
 --
 -- Индексы сохранённых таблиц
@@ -62,6 +103,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -69,7 +116,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

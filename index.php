@@ -1,75 +1,125 @@
 <?php
+session_start();
 error_reporting(-1);
+include 'app/views/header.php';
 require_once 'config.php';
 require_once 'funcs.php';
+require 'app/models/Pagination.php';
+
 $products = get_products();
+$page = $_GET['page'] ?? 1;
+$per_page = 4;
+$total = get_count('products');
+$pagination = new Pagination((int)$page, $per_page, $total);
+$start = $pagination->get_start();
+$products = get_products_pag($start, $per_page);
 
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Интернет Магазин</title>
-    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/public/css/starter-template.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap" rel="stylesheet">
-</head>
+
 <body>
-    <nav class="navbar  navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand text-danger" href="#">STORE</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Все товары</a></li>
-                    <li><a href="#">Категории</a></li>
-                    <li><a href="#">Корзина</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="app/views/admin.php">Панель администратора</a></li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-lg bg-dark  fixed-top" data-bs-theme="dark" >
+    <div class="container">
+        <a class="navbar-brand" href="#">Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Каталог товаров</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Вход
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="app/views/registration.php">Регистрация</a></li>
+                        <li><a class="dropdown-item" href="app/views/login.php">Авторизация</a></li>
+                        <li><a class="dropdown-item" href="app/views/admin/admin.php">Панель администратора</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <button id="get-cart" type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#cart-modal">
+                        Корзина <span class="badge badge-light mini-cart-qty"><?= $_SESSION['cart.qty'] ?? 0 ?></span>
+                    </button>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
         </div>
-    </nav>
-<div class="container">
+    </div>
+</nav>
+<!--    --><?php //debug($_SESSION); //session_destroy(); ?>
+<div class="container-fluid">
     <div class="starter-template">
-        <form action="index.php" method="post" class="d-flex form-admin">
-            <div class="row">
-                <div class="col-sm-10 col-md-10 col-lg-11">
-                    <input class="form-control  me-2 mb-3" type="text" name="search"  placeholder="Search" >
-                </div>
-                <div class="col">
-                    <button  class="btn btn-default" type="submit" name="bsearch" >Search</button>
-                </div>
-            </div>
-        </form>
         <h1 class="title">Все товары</h1>
         <div class="row">
+            <div class="col-lg-2">
+<!--                --><?php //include 'filter.php' ?>
+                <div id="myBtnContainer">
+                    <button class="btn btn-warning active mb-2" onclick="filterSelection('all')"> Показать все</button>
+                    <button class="btn btn-outline-warning text-dark mb-2" onclick="filterSelection('phone')"> Телефоны</button>
+                    <button class="btn btn-outline-warning text-dark mb-2" onclick="filterSelection('laptop')">Ноутбуки</button>
+                    <button class="btn btn-outline-warning text-dark mb-2" onclick="filterSelection('headset')">Гарнитура</button>
+                    <button class="btn btn-outline-warning text-dark mb-2" onclick="filterSelection('slipcovers')">Чехлы</button>
+                </div>
+
+            </div>
                 <?php if(!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
-            <div class="col-sm-6 col-md-4" id="prod">
+            <div class="col-lg-10 col-md-4 mb-3 me-3 text-center card " id="prod">
+                <div class="card-body">
                 <div class="thumbnail">
                     <img src="<?= $product['urlimg']?>" alt="<?= $product['title']?>">
-                    <div class="caption">
-                        <h4><?= $product['title']?></h4>
+                    <div class="title mt-4">
+                        <h5><?= $product['title']?></h5>
                         <p class="price"><?=number_format($product['price'], 0, '', ' ')?> грн</p>
                         <p>
-                            <a href="?cart=add&id=<?= $product['id']?>" class="btn btn-warning add-to-cart" data-id="<?= $product['id']?>" role="button">В корзину</a>
-                            <a href="#" class="btn btn-default" role="button">Подробнее</a>
+                            <a href="?cart=add&id=<?= $product['id']?>" class="btn btn-warning mb-3 add-to-cart" data-bs-toggle="modal" data-bs-target="#cart-modal" data-id="<?= $product['id']?>"><i class="fa-solid fa-cart-arrow-down"></i> В корзину</a>
+                            <a class="link-info" href="#">Подробнее</a>
                         </p>
                     </div>
                 </div>
             </div>
+            </div>
                 <?php endforeach; ?>
                 <?php endif; ?>
+        <div class="row justify-content-center mt-3 mb-5">
+            <div class="col-lg-2">
+            <?php
+            echo $pagination->get_html();
+            ?>
+
+            </div>
         </div>
+<!--      -->
+<!--        </div>-->
 </div>
 </div>
-<script src="/public/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="modal fade cart-modal" id="cart-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Корзина</h5>
+                    <button type="button" class="close btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-cart-content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+include 'app/views/footer.php';
+?>
+
 
 

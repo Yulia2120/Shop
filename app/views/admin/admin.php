@@ -1,6 +1,5 @@
 <?php
-$db = mysqli_connect('localhost', 'root', '', 'shop') or die ('Ошибка подключения к базе данных');
-
+require_once '../../../config.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,17 +15,17 @@ $db = mysqli_connect('localhost', 'root', '', 'shop') or die ('Ошибка по
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand text-danger" href="../../index.php">STORE</a>
+                <a class="navbar-brand text-danger" href="../../../index.php">STORE</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="../../index.php">Все товары</a></li>
+                    <li><a href="../../../index.php">Все товары</a></li>
                     <li><a href="#">Категории</a>
+                    <li><a href="users/users.php">Admin/Пользователи</a>
                     </li>
-                    <li ><a href="#">В корзину</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Панель администратора</a></li>
+                    <li><a href="#"></a></li>
                 </ul>
             </div>
         </div>
@@ -46,11 +45,12 @@ $db = mysqli_connect('localhost', 'root', '', 'shop') or die ('Ошибка по
             </form>
             <?php
             if(isset($_POST['search'])){
+                global $dbs;
                 $searchKey = $_POST['search'];
                 $query = "SELECT * FROM `products` WHERE `title` LIKE '%$searchKey%'";
             }else
                 $query = "SELECT * FROM `products`";
-            $results = mysqli_query($db, $query);
+            $results = mysqli_query($dbs, $query);
             ?>
 
             <table class="table shadow">
